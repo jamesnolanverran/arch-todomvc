@@ -5,10 +5,11 @@ d = arch.DOM
 module.exports = class TodosList extends React.Component
   -> 
     @state = edit-todo: ''
-  component-did-update: ->
-    node = React.find-DOM-node @refs['edit-field'] 
-    node.focus!
-    node.set-selection-range node.value.length node.value.length
+  component-did-update: (prev-props) ->
+    if !prev-props && @props.editing
+      node = React.find-DOM-node @refs['edit-field'] 
+      node.focus!
+      node.set-selection-range node.value.length, node.value.length
   render: ->
     d.ul do
       class-name: 'todo-list'
