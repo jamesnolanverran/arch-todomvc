@@ -21,8 +21,6 @@ module.exports = class TodoListItem extends React.Component
         | done.deref!                   => 'completed'
         | editing.deref!                => 'editing'
         | otherwise                     => ''
-      # style:
-      #   color: \red
       d.div do
         class-name: 'view'
         d.input do
