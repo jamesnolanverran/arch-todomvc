@@ -2,11 +2,11 @@ require! <[ arch ]>
 d = arch.DOM
 
 module.exports = class TodoListItem extends React.Component
-  -> 
+  ->
     @state = edit-todo: ''
   component-did-update: (prev-props) ->
     if @props.item.deref!editing
-      node = React.find-DOM-node @refs['edit-field'] 
+      node = React.find-DOM-node @refs['edit-field']
       node.focus!
       node.set-selection-range node.value.length, node.value.length
   render: ->
@@ -22,22 +22,22 @@ module.exports = class TodoListItem extends React.Component
         | editing.deref!                => 'editing'
         | otherwise                     => ''
       # style:
-      #   color: \red 
+      #   color: \red
       d.div do
         class-name: 'view'
         d.input do
           class-name: \toggle
           type: \checkbox
           checked: done.deref!
-          on-change: (e) -> 
-            done.update (done) -> 
+          on-change: (e) ->
+            done.update (done) ->
               !done
         d.label do
           on-double-click: (e) ~>
             @set-state edit-todo: task.deref!
             @props.items
-            |> map ~> 
-              it.get \editing .update (_) ~> 
+            |> map ~>
+              it.get \editing .update (_) ~>
                 if it == @props.item then true else false
           task.deref!
 
@@ -45,7 +45,7 @@ module.exports = class TodoListItem extends React.Component
           class-name: \destroy
           on-click: (e) ~>
             @props.item.update -> {}
-            @props.items.update (items) ~> 
+            @props.items.update (items) ~>
               items |> filter ~> it.task
 
       d.input do
@@ -59,7 +59,7 @@ module.exports = class TodoListItem extends React.Component
               done: false
               editing: false
             @set-state edit-todo: ''
-        on-key-up: (e) ~> 
+        on-key-up: (e) ~>
           if e.key-code == 13 and @state.edit-todo
             @props.item.update ~>
               task: @state.edit-todo
