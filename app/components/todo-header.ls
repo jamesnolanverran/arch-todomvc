@@ -19,7 +19,7 @@ module.exports = class TodoHeader extends React.Component
         on-key-up: ~>
           if it.key-code == 13 and @state.new-todo
             new-todo =
-              task: @state.new-todo
+              task: @state.new-todo.trim!
               done: false
               editing: false
             @props.items.update (items) ~>

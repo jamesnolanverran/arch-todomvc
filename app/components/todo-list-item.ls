@@ -4,7 +4,7 @@ d = arch.DOM
 module.exports = class TodoListItem extends React.Component
   ->
     @state = edit-todo: ''
-  component-did-update: (prev-props) ->
+  component-did-update: ->
     if @props.item.deref!editing
       node = React.find-DOM-node @refs['edit-field']
       node.focus!
@@ -53,19 +53,19 @@ module.exports = class TodoListItem extends React.Component
         on-blur: (e) ~>
           if @state.edit-todo
             @props.item.update ~>
-              task: @state.edit-todo
+              task: @state.edit-todo.trim!
               done: false
               editing: false
             @set-state edit-todo: ''
         on-key-up: (e) ~>
           if e.key-code == 13 and @state.edit-todo
             @props.item.update ~>
-              task: @state.edit-todo
+              task: @state.edit-todo.trim!
               done: done.deref!
               editing: false
             @set-state edit-todo: ''
           else if e.key-code == 27
             @set-state edit-todo: task.deref!
-            @props.item.get \editing .update -> false
+            editing.update -> false
         on-change: (e) ~>
           @set-state edit-todo: e.target.value

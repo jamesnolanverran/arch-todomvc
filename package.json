@@ -1,0 +1,11 @@
+{
+  "name": "arch-todomvc",
+  "version": "0.0.0",
+  "main": "app/app",
+  "scripts": {},
+  "dependencies": {
+    "LiveScript": "^1.3.1",
+    "arch": "git+https://github.com/redbadger/arch",
+    "prelude-ls": "^1.1.1"
+  }
+}
