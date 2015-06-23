@@ -51,20 +51,22 @@ module.exports = class TodoListItem extends React.Component
         value: @state.edit-todo
         ref: \edit-field
         on-blur: (e) ~>
-          if @state.edit-todo
+          if @state.edit-todo.trim!
             @props.item.update ~>
               task: @state.edit-todo.trim!
               done: false
               editing: false
             @set-state edit-todo: ''
+          else
+            editing.update -> false
         on-key-up: (e) ~>
-          if e.key-code == 13 and @state.edit-todo
+          if e.key-code == 13 and @state.edit-todo.trim!
             @props.item.update ~>
               task: @state.edit-todo.trim!
               done: done.deref!
               editing: false
             @set-state edit-todo: ''
-          else if e.key-code == 13 and @state.edit-todo == ''
+          else if e.key-code == 13 and @state.edit-todo.trim! == ''
             @props.item.update -> {} # refactor
             @props.items.update (items) ~>
               items |> filter ~> it.task
