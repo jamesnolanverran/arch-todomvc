@@ -22,12 +22,10 @@ module.exports = class TodoFooter extends React.Component
           class-name: "selected" if @props.mode is 'completed'
           href: '/completed'
           "Completed"
-      d.button do
-        class-name: 'clear-completed'
-        style: do
-          if not any ((item) -> (item.get \done .deref!) == true), @props.items
-            visibility: \hidden
-        on-click: (e) ~>
-          @props.items.update (items) ->
-            items |> filter -> !it.done
-        "Clear Completed"
+      if any (-> it.get \done .deref!), @props.items
+        d.button do
+          class-name: 'clear-completed'
+          on-click: (e) ~>
+            @props.items.update (items) ->
+              items |> filter -> !it.done
+          "Clear Completed"
