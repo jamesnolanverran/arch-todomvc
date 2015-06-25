@@ -6,16 +6,19 @@ global import require 'prelude-ls'
 require! <[
   ./routes/todo
   ./routes/not-found
+  ./observers/storage
 ]>
 
 initial-state =
-  items: [] 
+  items: []
 
 module.exports = arch.application.create do
   get-initial-state: ->
     initial-state
 
   start: (app-state) ->
+    items = app-state.get \state.items
+    storage items # localStorage observer
 
   routes: ->
     page = arch.routes.page

@@ -11,6 +11,10 @@ d = arch.DOM
 
 module.exports = class TodoRoute extends BaseRoute
   get-title: -> super "TodoMVC"
+  component-did-mount: ->
+    items = @props.app-state.get \state.items
+    if !items.length && JSON.parse(localStorage.getItem('items'))
+      items.update -> JSON.parse(localStorage.get-item \items)
   render: ->
     items = @props.app-state.get \state.items
     mode = (@props.app-state.get \route.params.mode .deref!) or ''
@@ -20,7 +24,7 @@ module.exports = class TodoRoute extends BaseRoute
         todo-header do
           items: items
           mode: mode
-        if items.length > 0 
+        if items.length > 0
           todo-main do
             items: items
             mode: mode
