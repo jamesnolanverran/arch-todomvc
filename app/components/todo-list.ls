@@ -10,7 +10,7 @@ module.exports = class TodoList extends React.Component
       @props.items
       |> filter ~>
         mode = if it.deref!done then \completed else \active
-        @props.mode is '' or @props.mode == mode
+        @props.mode is null or @props.mode == mode
       |> map ~>
         todo-list-item do
           items: @props.items

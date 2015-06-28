@@ -42,7 +42,7 @@ module.exports = class TodoListItem extends React.Component
         d.button do
           class-name: \destroy
           on-click: (e) ~>
-            @props.item.update -> {} # refactor
+            @props.item.update -> {} # TODO: refactor
             @props.items.update (items) ~>
               items |> filter ~> it.task
 
@@ -67,7 +67,7 @@ module.exports = class TodoListItem extends React.Component
               editing: false
             @set-state edit-todo: ''
           else if e.key-code == 13 and @state.edit-todo.trim! == ''
-            @props.item.update -> {} # refactor
+            @props.item.update -> {} # TODO: refactor
             @props.items.update (items) ~>
               items |> filter ~> it.task
           else if e.key-code == 27

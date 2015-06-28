@@ -18,7 +18,7 @@ module.exports = arch.application.create do
 
   start: (app-state) ->
     items = app-state.get \state.items
-    storage items # localStorage observer
+    storage items
 
   routes: ->
     page = arch.routes.page

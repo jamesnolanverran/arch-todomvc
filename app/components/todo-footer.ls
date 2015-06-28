@@ -1,7 +1,11 @@
 require! <[ arch ]>
 d = arch.DOM
+routes = arch.routes
 
 module.exports = class TodoFooter extends React.Component
+
+  get-completed: -> it |> filter -> (it.get \done .deref!) == true
+
   render: ->
     d.footer do
       class-name: 'footer'
@@ -11,7 +15,7 @@ module.exports = class TodoFooter extends React.Component
       d.ul do
         class-name: 'filters'
         d.li d.a do
-          class-name: "selected" unless @props.mode in <[active completed]>
+          class-name: "selected" unless @props.mode in <[ active completed ]>
           href: '/'
           "All"
         d.li d.a do
@@ -22,10 +26,12 @@ module.exports = class TodoFooter extends React.Component
           class-name: "selected" if @props.mode is 'completed'
           href: '/completed'
           "Completed"
-      if any (-> it.get \done .deref!), @props.items
+      if num-completed = @get-completed @props.items .length
         d.button do
           class-name: 'clear-completed'
-          on-click: (e) ~>
+          on-click: (e) !~> do
             @props.items.update (items) ->
               items |> filter -> !it.done
-          "Clear Completed"
+            if @props.mode == \completed
+              routes.navigate '/'
+          "Clear #num-completed Completed"
