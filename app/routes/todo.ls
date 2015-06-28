@@ -14,7 +14,7 @@ module.exports = class TodoRoute extends BaseRoute
 
   component-will-mount: ->
     # look for localStorage client side only # TODO: refactor
-    if tyyypeof window != 'undefined' &&
+    if typeof window != 'undefined' &&
        window.document &&
        window.document.createElement &&
        typeof local-storage != 'undefined'

@@ -70,7 +70,7 @@ module.exports = class TodoListItem extends React.Component
             @props.item.update -> {} # TODO: refactor
             @props.items.update (items) ~>
               items |> filter ~> it.task
-          else if e.key-code == 27
+          else if e.key-code == 27 # esc
             @set-state edit-todo: task.deref!
             editing.update -> false
         on-change: (e) ~>
