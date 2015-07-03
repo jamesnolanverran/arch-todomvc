@@ -12,15 +12,16 @@ d = arch.DOM
 module.exports = class TodoRoute extends BaseRoute
   get-title: -> super "TodoMVC"
 
-  component-will-mount: ->
-    # look for localStorage client side only # TODO: refactor
-    if typeof window != 'undefined' &&
+  can-use-DOM: ->
+    typeof window != 'undefined' &&
        window.document &&
-       window.document.createElement &&
-       typeof local-storage != 'undefined'
-      if json-items = JSON.parse (local-storage.getItem \items)
-        items = @props.app-state.get \state.items
-        items.update -> json-items
+       window.document.createElement
+
+  component-will-mount: ->
+    # look for localStorage client side only
+    if @can-use-DOM! && typeof local-storage != 'undefined' && json-items = JSON.parse (local-storage.getItem \items)
+      items = @props.app-state.get \state.items
+      items.update -> json-items
 
   render: ->
     items = @props.app-state.get \state.items
@@ -42,4 +43,3 @@ module.exports = class TodoRoute extends BaseRoute
       d.footer do
         class-name: 'info'
         d.p "Double-click to edit a todo"
-

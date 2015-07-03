@@ -1,5 +1,5 @@
 
 module.exports = (items) ->
   items.on-change ->
-    if local-storage
+    if typeof local-storage != 'undefined'
       local-storage.set-item \items (JSON.stringify (items.deref! |> map -> it))
